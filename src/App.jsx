@@ -1,7 +1,8 @@
 import { useState } from "react";
 import board from "./assets/board.png";
 import "./diceOdds";
-import "./round3V3";
+import "./rounds/round3V3";
+import "./rounds/round3V2";
 
 function App() {
   return (

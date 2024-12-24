@@ -1,18 +1,12 @@
 // Round 3 dice vs 3 dice
 
-// 3 dice rolled: probability of die outcomes
-
 const DIE_SIDES = 6;
 
 let redWinsHighestProbability = 0;
-let blueWinsHighestProbability = 0;
-
 let redWinsMiddleProbability = 0;
-let blueWinsMiddleProbability = 0;
-
 let redWinsLowestProbability = 0;
-let blueWinsLowestProbability = 0;
 
+// 3 dice rolled: probability of die outcomes
 const highestDieProbabilities = [
   1 / 216, // Probability of highest die outcome being 1
   7 / 216, // Probability of highest die outcome being 2
@@ -21,7 +15,6 @@ const highestDieProbabilities = [
   61 / 216, // Probability of highest die outcome being 5
   91 / 216, // Probability of highest die outcome being 6
 ];
-
 const middleDieProbabilities = [
   16 / 216, // Probability of middle die outcome being 1
   40 / 216, // Probability of middle die outcome being 2
@@ -30,7 +23,6 @@ const middleDieProbabilities = [
   40 / 216, // Probability of middle die outcome being 5
   16 / 216, // Probability of middle die outcome being 6
 ];
-
 const lowestDieProbabilities = [
   91 / 216, // Probability of lowest die outcome being 1
   61 / 216, // Probability of lowest die outcome being 2
@@ -40,7 +32,6 @@ const lowestDieProbabilities = [
   1 / 216, // Probability of lowest die outcome being 6
 ];
 
-// First round: HIGHEST die vs HIGHEST die
 for (let red = 0; red < DIE_SIDES; red++) {
   for (let blue = 0; blue < DIE_SIDES; blue++) {
     if (red > blue) {
@@ -50,17 +41,45 @@ for (let red = 0; red < DIE_SIDES; red++) {
         middleDieProbabilities[red] * middleDieProbabilities[blue];
       redWinsLowestProbability +=
         lowestDieProbabilities[red] * lowestDieProbabilities[blue];
-    } else {
-      blueWinsHighestProbability +=
-        highestDieProbabilities[red] * highestDieProbabilities[blue];
-      blueWinsMiddleProbability +=
-        middleDieProbabilities[red] * middleDieProbabilities[blue];
-      blueWinsLowestProbability +=
-        lowestDieProbabilities[red] * lowestDieProbabilities[blue];
     }
   }
 }
 
-console.log(redWinsHighestProbability * 100 + blueWinsHighestProbability * 100);
-console.log(redWinsMiddleProbability * 100 + blueWinsMiddleProbability * 100);
-console.log(redWinsLowestProbability * 100 + blueWinsLowestProbability * 100);
+const redWins3Dice =
+  redWinsHighestProbability *
+  redWinsMiddleProbability *
+  redWinsLowestProbability;
+
+const redWins2Dice =
+  redWinsHighestProbability *
+    redWinsMiddleProbability *
+    (1 - redWinsLowestProbability) +
+  redWinsHighestProbability *
+    redWinsLowestProbability *
+    (1 - redWinsMiddleProbability) +
+  redWinsMiddleProbability *
+    redWinsLowestProbability *
+    (1 - redWinsHighestProbability);
+
+const redWins1Die =
+  redWinsHighestProbability *
+    (1 - redWinsMiddleProbability) *
+    (1 - redWinsLowestProbability) +
+  redWinsMiddleProbability *
+    (1 - redWinsHighestProbability) *
+    (1 - redWinsLowestProbability) +
+  redWinsLowestProbability *
+    (1 - redWinsHighestProbability) *
+    (1 - redWinsMiddleProbability);
+
+const redWins0Dice =
+  (1 - redWinsHighestProbability) *
+  (1 - redWinsMiddleProbability) *
+  (1 - redWinsLowestProbability);
+
+export const outcomes3v3 = [
+  { value: redWins3Dice, description: "Red wins all 3 dice" },
+  { value: redWins2Dice, description: "Red wins 2 dice, loses 1" },
+  { value: redWins1Die, description: "Red wins 1 die, loses 2" },
+  { value: redWins0Dice, description: "Red loses all 3 dice" },
+];
