@@ -22,14 +22,6 @@ const middleDieProbabilities3 = [
   40 / 216, // Probability of middle die outcome being 5
   16 / 216, // Probability of middle die outcome being 6
 ];
-const lowestDieProbabilities3 = [
-  91 / 216, // Probability of lowest die outcome being 1
-  61 / 216, // Probability of lowest die outcome being 2
-  37 / 216, // Probability of lowest die outcome being 3
-  19 / 216, // Probability of lowest die outcome being 4
-  7 / 216, // Probability of lowest die outcome being 5
-  1 / 216, // Probability of lowest die outcome being 6
-];
 
 // 2 dice rolled: probability of die outcomes
 const highestDieProbabilities2 = [

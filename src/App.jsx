@@ -3,6 +3,9 @@ import board from "./assets/board.png";
 import "./diceOdds";
 import "./rounds/round3V3";
 import "./rounds/round3V2";
+import "./rounds/round3V1";
+import "./rounds/round2V1";
+import "./rounds/round2V2";
 
 function App() {
   return (
