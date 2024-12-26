@@ -77,9 +77,9 @@ const redWins0Dice =
   (1 - redWinsMiddleProbability) *
   (1 - redWinsLowestProbability);
 
-export const outcomes3v3 = [
-  { value: redWins3Dice, description: "Red wins all 3 dice" },
-  { value: redWins2Dice, description: "Red wins 2 dice, loses 1" },
-  { value: redWins1Die, description: "Red wins 1 die, loses 2" },
-  { value: redWins0Dice, description: "Red loses all 3 dice" },
+export const outcomes3V3 = [
+  redWins3Dice,
+  redWins2Dice,
+  redWins1Die,
+  redWins0Dice,
 ];

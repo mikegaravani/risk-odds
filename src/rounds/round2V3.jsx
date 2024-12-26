@@ -1,4 +1,4 @@
-// Round 2 dice vs 2 dice
+// Round 2 dice vs 3 dice
 
 const DIE_SIDES = 6;
 
@@ -23,13 +23,31 @@ const lowestDieProbabilities2 = [
   1 / 36, // Probability of lowest die outcome being 6
 ];
 
+// 3 dice rolled: probability of die outcomes
+const highestDieProbabilities3 = [
+  1 / 216, // Probability of highest die outcome being 1
+  7 / 216, // Probability of highest die outcome being 2
+  19 / 216, // Probability of highest die outcome being 3
+  37 / 216, // Probability of highest die outcome being 4
+  61 / 216, // Probability of highest die outcome being 5
+  91 / 216, // Probability of highest die outcome being 6
+];
+const middleDieProbabilities3 = [
+  16 / 216, // Probability of middle die outcome being 1
+  40 / 216, // Probability of middle die outcome being 2
+  52 / 216, // Probability of middle die outcome being 3
+  52 / 216, // Probability of middle die outcome being 4
+  40 / 216, // Probability of middle die outcome being 5
+  16 / 216, // Probability of middle die outcome being 6
+];
+
 for (let red = 0; red < DIE_SIDES; red++) {
   for (let blue = 0; blue < DIE_SIDES; blue++) {
     if (red > blue) {
       redWinsHighestProbability +=
-        highestDieProbabilities2[red] * highestDieProbabilities2[blue];
+        highestDieProbabilities2[red] * highestDieProbabilities3[blue];
       redWinsLowestProbability +=
-        lowestDieProbabilities2[red] * lowestDieProbabilities2[blue];
+        lowestDieProbabilities2[red] * middleDieProbabilities3[blue];
     }
   }
 }
@@ -43,4 +61,4 @@ const redWins1Die =
 const redWins0Dice =
   (1 - redWinsHighestProbability) * (1 - redWinsLowestProbability);
 
-export const outcomes2V2 = [0, redWins2Dice, redWins1Die, redWins0Dice];
+export const outcomes2V3 = [0, redWins2Dice, redWins1Die, redWins0Dice];

@@ -61,8 +61,4 @@ const redWins1Die =
 const redWins0Dice =
   (1 - redWinsHighestProbability) * (1 - redWinsMiddleProbability);
 
-export const outcomes3v2 = [
-  { value: redWins2Dice, description: "Red wins all 2 dice" },
-  { value: redWins1Die, description: "Red wins 1 die, loses 1" },
-  { value: redWins0Dice, description: "Red loses all 2 dice" },
-];
+export const outcomes3V2 = [0, redWins2Dice, redWins1Die, redWins0Dice];

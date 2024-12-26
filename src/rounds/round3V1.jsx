@@ -37,7 +37,4 @@ const redWins1Die = redWinsHighestProbability;
 
 const redWins0Dice = 1 - redWins1Die;
 
-export const round3V1 = [
-  { value: redWins1Die, description: "Red wins the 1 die" },
-  { value: redWins0Dice, description: "Red loses the 1 die" },
-];
+export const outcomes3V1 = [0, 0, redWins1Die, redWins0Dice];
