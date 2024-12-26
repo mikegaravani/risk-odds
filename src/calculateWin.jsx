@@ -20,13 +20,18 @@ const outcomesMap = {
   outcomes3V3,
 };
 
-let likelihoodRows = 99;
-let likelihoodCols = 99;
+let likelihoodRows = 100;
+let likelihoodCols = 100;
 let likelihoodMatrix = new Array(likelihoodRows)
   .fill(null)
   .map(() => new Array(likelihoodCols).fill(-1));
 
-// TODO One attacking army is a territory placeholder
+likelihoodMatrix[0] = new Array(likelihoodCols).fill(0);
+for (let i = 0; i < likelihoodRows; i++) {
+  likelihoodMatrix[i][0] = 1;
+}
+likelihoodMatrix[0][0] = 0;
+
 function calculateLikelihood(redArmies, blueArmies) {
   if (likelihoodMatrix[redArmies][blueArmies] !== -1) {
     return likelihoodMatrix[redArmies][blueArmies];
@@ -36,8 +41,6 @@ function calculateLikelihood(redArmies, blueArmies) {
     const minIndex = Math.min(redArmiesToConsider, blueArmiesToConsider);
     const key = `outcomes${redArmiesToConsider}V${blueArmiesToConsider}`;
     const outcomes = outcomesMap[key];
-
-    // BASE CASES TODO
 
     if (minIndex === 1) {
       likelihoodMatrix[redArmies][blueArmies] =
@@ -58,4 +61,19 @@ function calculateLikelihood(redArmies, blueArmies) {
 
     return likelihoodMatrix[redArmies][blueArmies];
   }
+}
+
+export function calculateWin(redArmies, blueArmies) {
+  if (redArmies < 0 || blueArmies < 0 || redArmies > 99 || blueArmies > 99) {
+    return "Invalid input";
+  }
+  if (redArmies === 0) {
+    return 0;
+  }
+  const actualRedArmies = redArmies - 1;
+
+  const winningAverage = calculateLikelihood(actualRedArmies, blueArmies) * 100;
+  const roundedWinningAverage = parseFloat(winningAverage.toFixed(2));
+
+  return roundedWinningAverage;
 }

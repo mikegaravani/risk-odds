@@ -1,7 +1,7 @@
 import { useState } from "react";
 import board from "./assets/board.png";
 import diceIcon from "./assets/dice-cube.png";
-import "./diceOdds";
+import { calculateWin } from "./calculateWin";
 import { outcomes1V1 } from "./rounds/round1V1";
 import { outcomes1V2 } from "./rounds/round1V2";
 import { outcomes1V3 } from "./rounds/round1V3";
@@ -14,6 +14,21 @@ import { outcomes3V3 } from "./rounds/round3V3";
 
 function App() {
   const [isProbabilityWindowOpen, setIsProbabilityWindowOpen] = useState(false);
+  const [isWinningWindowOpen, setIsWinningWindowOpen] = useState(false);
+
+  const [attackingArmies, setAttackingArmies] = useState(0);
+  const [defendingArmies, setDefendingArmies] = useState(0);
+
+  let win = "0";
+
+  const attackingArmiesNumber = parseInt(attackingArmies, 10);
+  const defendingArmiesNumber = parseInt(defendingArmies, 10);
+
+  if (isNaN(attackingArmiesNumber) || isNaN(defendingArmiesNumber)) {
+    win = "Invalid";
+  } else {
+    win = calculateWin(attackingArmiesNumber, defendingArmiesNumber);
+  }
 
   const outcomes = [
     { name: "1V1", data: outcomes1V1 },
@@ -52,10 +67,21 @@ function App() {
 
         <div className="text-lg text-gray-700 text-center max-w-md">
           Number of attacking armies:
-          <input className="w-full p-2 mb-4 border border-gray-300 rounded-lg" />
+          <input
+            value={attackingArmies}
+            onChange={(e) => setAttackingArmies(e.target.value)}
+            className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+          />
           Number of defending armies:
-          <input className="w-full p-2 mb-4 border border-gray-300 rounded-lg" />
-          <button className="w-full p-2 mt-4 bg-blue-500 text-white rounded-lg">
+          <input
+            value={defendingArmies}
+            onChange={(e) => setDefendingArmies(e.target.value)}
+            className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+          />
+          <button
+            onClick={() => setIsWinningWindowOpen(!isProbabilityWindowOpen)}
+            className="w-full p-2 mt-4 bg-blue-500 text-white rounded-lg"
+          >
             Calculate odds
           </button>
         </div>
@@ -125,6 +151,43 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* Winning odds popup window */}
+      {isWinningWindowOpen && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+          <div className="bg-white m-4 p-6 rounded-lg shadow-lg max-w-fit w-[90%]">
+            <h2 className="text-2xl font-bold mb-4">
+              PROBABILITY OF CONQUERING THE TERRITORY
+            </h2>
+
+            <p className="text-lg text-gray-700 mb-1">
+              Your armies: {attackingArmies}
+            </p>
+            <p className="text-lg text-gray-700 mb-4">
+              Enemy armies: {defendingArmies}
+            </p>
+            <h1
+              className={`text-7xl font-bold text-center mb-4 ${
+                win >= 50 ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {win} %
+            </h1>
+
+            <button
+              onClick={() => setIsWinningWindowOpen(false)}
+              className="px-4 py-2 mt-4 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Footer */}
+      <footer className="w-full text-center p-4 bg-gray-200 text-gray-600 text-sm">
+        Made with ❤️ by Mike G - 2024
+      </footer>
     </>
   );
 }
